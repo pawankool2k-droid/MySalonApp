@@ -1,6 +1,7 @@
 {
   "name": "salon-booking-app",
   "private": true,
+  "homepage": "https://pawankool2k-droid.github.io/MySalonApp",
   "version": "0.0.1",
   "type": "module",
   "scripts": {

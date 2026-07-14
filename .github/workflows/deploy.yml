@@ -2,27 +2,27 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
-
-permissions:
-  contents: write
-  pages: write
-  id-token: write
+    branches:
+      - main
 
 jobs:
-  deploy:
+  build-and-deploy:
+    concurrency:
+      group: 'pages-deploy'
+      cancel-in-progress: true
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v5
         with:
           node-version: '24'
-      - run: npm install
+      - run: npm ci
       - run: npm run build
-      - uses: peaceiris/actions-gh-pages@v4
+      - uses: actions/upload-pages-artifact@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          publish_branch: gh-pages
-          allow_empty_commit: false
+          path: ./dist
+      - uses: actions/deploy-pages@v1

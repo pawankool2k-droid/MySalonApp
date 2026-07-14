@@ -32,10 +32,14 @@ The app can be deployed to free hosting providers such as Vercel or GitHub Pages
 
 ### GitHub Pages
 
-1. Create a GitHub repository named `MySalonApp`.
-2. Push the project code to the `main` branch.
-3. A GitHub Actions workflow will build and publish the app to the `gh-pages` branch.
-4. The site should become available at `https://pawankool2k-droid.github.io/MySalonApp` shortly after the action completes.
+This repository includes a GitHub Actions workflow at `.github/workflows/deploy.yml` that builds the app and deploys the generated `dist` folder to GitHub Pages. The project page is expected at `https://pawankool2k-droid.github.io/MySalonApp` after the workflow completes.
+
+### Vercel
+
+1. Create a new project in Vercel.
+2. Link the repository.
+3. Use the default build command: `npm run build`.
+4. Publish the `dist` output folder.
 
 ## Notes
 
