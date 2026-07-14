@@ -26,13 +26,8 @@ jobs:
           publish_dir: ./dist
           publish_branch: gh-pages
           allow_empty_commit: false
-      - uses: actions/github-script@v7
+      - uses: actions/configure-pages@v4
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const response = await github.rest.repos.createPagesSite({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              source: { branch: 'gh-pages', path: '/' }
-            });
-            core.info(`Configured Pages with status ${response.status}`);
+          enablement: 'true'
+          source_branch: 'gh-pages'
+          source_path: '/'
