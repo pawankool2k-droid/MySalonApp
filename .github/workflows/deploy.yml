@@ -30,8 +30,9 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            await github.request('PUT /repos/{owner}/{repo}/pages', {
+            const response = await github.rest.repos.createPagesSite({
               owner: context.repo.owner,
               repo: context.repo.repo,
               source: { branch: 'gh-pages', path: '/' }
             });
+            core.info(`Configured Pages with status ${response.status}`);
