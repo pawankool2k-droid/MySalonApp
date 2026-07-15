@@ -6,7 +6,7 @@ on:
       - main
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -20,12 +20,7 @@ jobs:
           node-version: '24'
       - run: npm install
       - run: npm run build
-      - uses: peaceiris/actions-gh-pages@v4
+      - uses: actions/upload-pages-artifact@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          publish_branch: gh-pages
-          allow_empty_commit: false
-      - uses: actions/configure-pages@v4
-        with:
-          enablement: 'true'
+          path: ./dist
+      - uses: actions/deploy-pages@v1
