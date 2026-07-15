@@ -29,5 +29,3 @@ jobs:
       - uses: actions/configure-pages@v4
         with:
           enablement: 'true'
-          source_branch: 'gh-pages'
-          source_path: '/'
