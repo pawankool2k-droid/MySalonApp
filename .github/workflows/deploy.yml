@@ -23,12 +23,7 @@ jobs:
           node-version: '24'
       - run: npm ci
       - run: npm run build
-      - uses: actions/configure-pages@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-pages-artifact@v1
         with:
           path: ./dist
       - uses: actions/deploy-pages@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
