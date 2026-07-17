@@ -38,8 +38,11 @@ This repository includes a GitHub Actions workflow at `.github/workflows/deploy.
 
 1. Create a new project in Vercel.
 2. Link the repository.
-3. Use the default build command: `npm run build`.
-4. Publish the `dist` output folder.
+3. Run 'npm install'
+4. If require run 'npm audit fix --force'
+5. Use the default build command: `npm run build`.
+6. Publish the `dist` output folder.
+7. You can test my hosting from local using this command 'npx vite preview --host --port 4173' in root folder.
 
 ## Notes
 
