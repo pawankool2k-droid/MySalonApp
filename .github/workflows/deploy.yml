@@ -28,16 +28,13 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: '**/package-lock.json'
 
       - name: Install dependencies
         # Run inside the subfolder
-        run: npm ci
-        working-directory: ./MySalonApp
+        run: npm ci        
 
       - name: Build
-        run: npm run build
-        working-directory: ./MySalonApp
+        run: npm run build        
         env:
           GITHUB_ACTIONS: true
           GITHUB_REPOSITORY: ${{ github.repository }}
@@ -45,7 +42,7 @@ jobs:
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: ./MySalonApp/dist
+          path: './dist'
 
       - id: deployment
         uses: actions/deploy-pages@v4
