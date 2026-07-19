@@ -1,3 +1,4 @@
+
 name: Deploy to GitHub Pages
 
 on:
@@ -27,12 +28,16 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: 'MySalonApp/package-lock.json'
+          cache-dependency-path: './MySalonApp/package-lock.json'
 
-      - run: npm ci
+      - name: Install dependencies
+        # Run inside the subfolder
+        run: npm ci
+        working-directory: ./MySalonApp
 
       - name: Build
         run: npm run build
+        working-directory: ./MySalonApp
         env:
           GITHUB_ACTIONS: true
           GITHUB_REPOSITORY: ${{ github.repository }}
@@ -40,7 +45,7 @@ jobs:
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ./MySalonApp/dist
 
       - id: deployment
         uses: actions/deploy-pages@v4
