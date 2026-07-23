@@ -2,9 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
 :root {
   color-scheme: light;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Playfair Display', serif;
 }
 
 html {
@@ -14,7 +17,8 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #f7f2ed;
+  background: linear-gradient(135deg, #f7f2ed 0%, #f3ebe5 50%, #ebe3dd 100%);
+  background-attachment: fixed;
 }
 
 * {
@@ -28,6 +32,153 @@ select {
   font: inherit;
 }
 
+/* Glassmorphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.glass-dark {
+  background: rgba(26, 26, 26, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(26, 26, 26, 0.1);
+}
+
+/* Modern card with subtle elevation */
+.card {
+  @apply rounded-2xl border border-border-light bg-white/80 shadow-sm-light transition-all duration-350 hover:shadow-soft;
+}
+
+.card-interactive {
+  @apply cursor-pointer transition-all duration-350 hover:shadow-soft hover:border-sage/30 hover:scale-[1.02];
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  @apply text-text-primary;
+}
+
+p {
+  @apply text-text-secondary;
+}
+
+.text-tertiary {
+  @apply text-text-tertiary;
+}
+
+/* Input styling */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+select,
+textarea {
+  @apply w-full rounded-xl border border-border-light bg-white/60 px-4 py-2.5 text-text-primary outline-none transition-all duration-350;
+  @apply focus:border-sage focus:bg-white focus:ring-2 focus:ring-sage/20;
+  @apply placeholder:text-text-tertiary;
+}
+
+textarea {
+  @apply resize-vertical min-h-[100px];
+}
+
+/* Button styles */
+.btn {
+  @apply inline-flex items-center justify-center rounded-xl px-5 py-2.5 font-semibold text-sm transition-all duration-350;
+}
+
+.btn-primary {
+  @apply btn bg-sage text-white hover:bg-sage/90 active:scale-95 shadow-soft;
+}
+
+.btn-secondary {
+  @apply btn border border-sand bg-white/70 text-text-primary hover:bg-blush/50;
+}
+
+.btn-tertiary {
+  @apply btn text-sage hover:text-sage/80;
+}
+
+.btn-sm {
+  @apply px-4 py-2 text-xs font-medium;
+}
+
+.btn-lg {
+  @apply px-8 py-3.5 text-base;
+}
+
 ::selection {
   background: rgba(167, 197, 157, 0.35);
+}
+
+/* Smooth animations */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(207, 195, 185, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(167, 197, 157, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(167, 197, 157, 0.7);
+}
+
+/* Smooth page transitions */
+body {
+  transition: background-color 0.3s ease;
+}
+
+/* Focus visible for accessibility */
+:focus-visible {
+  outline: 2px solid rgba(167, 197, 157, 0.5);
+  outline-offset: 2px;
+}
+
+/* Responsive text sizing */
+@media (max-width: 640px) {
+  h1 {
+    @apply text-3xl;
+  }
+  h2 {
+    @apply text-2xl;
+  }
 }

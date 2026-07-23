@@ -123,67 +123,83 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blush via-cream to-white text-charcoal">
-      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <header className="mb-8 flex flex-col gap-4 rounded-[2.5rem] border border-sand bg-white/90 p-6 shadow-soft sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="text-xs uppercase tracking-[0.35em] text-sage">Salon Appointment</p>
-            <h1 className="mt-3 text-4xl font-semibold tracking-tight text-charcoal sm:text-5xl">
-              Radiant beauty starts with a calm booking experience.
-            </h1>
-            <p className="mt-4 max-w-2xl text-sm leading-7 text-gray-600 sm:text-base">
-              Pick your favorite makeup or waxing service, share skin details, and choose a time that fits your schedule. Admin mode keeps every booking safe on your device.
-            </p>
-          </div>
+    <div className="min-h-screen bg-gradient-to-br from-cream via-blush to-accent-light text-charcoal">
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        {/* Enhanced Header */}
+        <header className="mb-12 animate-fade-in">
+          <div className="card p-8 sm:p-12 mb-8">
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+              <div className="flex-1">
+                <p className="text-xs uppercase tracking-[0.35em] text-sage font-semibold">Premium Salon Services</p>
+                <h1 className="mt-4 text-4xl sm:text-5xl font-bold text-charcoal leading-tight">
+                  Radiant Beauty Starts Here
+                </h1>
+                <p className="mt-5 max-w-2xl text-base text-text-secondary leading-relaxed">
+                  Experience luxury salon services with expert makeup artistry and precision waxing. Book your appointment, share your skin details, and enjoy a personalized beauty experience.
+                </p>
+              </div>
 
-          <div className="flex flex-col gap-3 sm:items-end">
-            <button
-              type="button"
-              onClick={() => setMode('admin-login')}
-              className="inline-flex items-center justify-center rounded-3xl bg-sage px-6 py-3 text-sm font-semibold text-white transition hover:bg-sage/90"
-            >
-              Admin dashboard
-            </button>
-            <div className="rounded-3xl border border-sand bg-blush/80 px-5 py-4 text-sm text-gray-700">
-              <p className="font-semibold text-charcoal">Hosted locally</p>
-              <p className="mt-1">Entries persist in your browser and appear instantly in admin view.</p>
+              <div className="flex flex-col gap-3 sm:items-end flex-shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setMode('admin-login')}
+                  className="btn-primary btn-lg"
+                >
+                  Admin Access
+                </button>
+                <div className="card p-4 bg-gradient-warm text-sm max-w-xs">
+                  <p className="font-semibold text-charcoal">✨ Local Storage</p>
+                  <p className="mt-2 text-text-secondary text-xs">Your bookings are saved securely in your browser and appear instantly in admin view.</p>
+                </div>
+              </div>
             </div>
           </div>
         </header>
 
+        {/* Admin Login */}
         {mode === 'admin-login' ? (
-          <div className="mx-auto max-w-3xl rounded-[2rem] border border-sand bg-white/90 p-8 shadow-soft">
-            <h2 className="text-2xl font-semibold text-charcoal">Admin access</h2>
-            <p className="mt-2 text-sm text-gray-600">
-              Enter the admin passphrase to manage appointments and view consent details.
-            </p>
-            <div className="mt-6 grid gap-4 sm:grid-cols-[1fr,auto]">
-              <input
-                type="password"
-                value={adminPassword}
-                onChange={event => setAdminPassword(event.target.value)}
-                placeholder="Enter password"
-                className="w-full rounded-3xl border border-sand bg-blush/60 px-4 py-3 text-gray-800 outline-none focus:border-sage focus:ring-2 focus:ring-sage/20"
-              />
+          <div className="mx-auto max-w-2xl animate-slide-up">
+            <div className="card p-8 sm:p-12">
+              <h2 className="text-3xl font-bold text-charcoal">Admin Access</h2>
+              <p className="mt-3 text-text-secondary">
+                Enter the admin passphrase to manage appointments and view consent details.
+              </p>
+              <div className="mt-8 space-y-4">
+                <div>
+                  <label className="block text-sm font-semibold text-charcoal mb-2">Passphrase</label>
+                  <input
+                    type="password"
+                    value={adminPassword}
+                    onChange={event => setAdminPassword(event.target.value)}
+                    placeholder="Enter admin passphrase"
+                    className="input"
+                    onKeyPress={e => e.key === 'Enter' && handleAdminLogin()}
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={handleAdminLogin}
+                  className="btn-primary w-full btn-lg"
+                >
+                  Unlock Dashboard
+                </button>
+              </div>
+              {authError && (
+                <div className="mt-4 p-4 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+                  {authError}
+                </div>
+              )}
               <button
                 type="button"
-                onClick={handleAdminLogin}
-                className="rounded-3xl bg-sage px-6 py-3 text-sm font-semibold text-white transition hover:bg-sage/90"
+                onClick={() => {
+                  setMode('booking');
+                  setAuthError('');
+                }}
+                className="btn-tertiary mt-6"
               >
-                Unlock
+                ← Back to Booking
               </button>
             </div>
-            {authError ? <p className="mt-4 text-sm text-red-600">{authError}</p> : null}
-            <button
-              type="button"
-              onClick={() => {
-                setMode('booking');
-                setAuthError('');
-              }}
-              className="mt-6 text-sm font-semibold text-sage underline"
-            >
-              Return to booking
-            </button>
           </div>
         ) : mode === 'admin' ? (
           <AdminDashboard
@@ -192,34 +208,47 @@ export default function App() {
             onToggleStatus={handleToggleStatus}
           />
         ) : (
-          <main className="space-y-8">
+          <main className="space-y-10">
             {mode === 'summary' && activeAppointment ? (
               <AppointmentSummary appointment={activeAppointment} onReset={handleReset} />
             ) : (
               <BookingForm services={services} onSubmit={handleAppointmentSubmit} />
             )}
 
-            {recentAppointment ? (
-              <div className="rounded-[2rem] border border-sand bg-white/90 p-6 shadow-soft">
-                <div className="flex items-center justify-between gap-4">
+            {recentAppointment && mode !== 'summary' ? (
+              <div className="card p-6 sm:p-8 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
                   <div>
-                    <p className="text-sm uppercase tracking-[0.2em] text-sage">Latest booking</p>
-                    <h2 className="mt-2 text-xl font-semibold text-charcoal">Most recent reservation</h2>
+                    <p className="text-xs uppercase tracking-[0.2em] text-sage font-semibold">Latest Booking</p>
+                    <h2 className="mt-2 text-2xl font-bold text-charcoal">Most Recent Reservation</h2>
                   </div>
-                  <span className="rounded-full bg-sand px-4 py-2 text-sm font-semibold text-charcoal">
+                  <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
+                    recentAppointment.status === 'Confirmed'
+                      ? 'bg-sage/20 text-sage'
+                      : 'bg-accent/20 text-accent'
+                  }`}>
                     {recentAppointment.status}
                   </span>
                 </div>
-                <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                  <div className="rounded-3xl bg-blush/70 p-4">
-                    <p className="font-semibold text-charcoal">Guest</p>
-                    <p>{recentAppointment.customerName}</p>
-                    <p className="text-sm text-gray-600">{recentAppointment.email}</p>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                  <div className="rounded-xl bg-gradient-warm p-4">
+                    <p className="font-semibold text-charcoal text-sm">Guest</p>
+                    <p className="mt-1 text-charcoal font-medium">{recentAppointment.customerName}</p>
+                    <p className="text-xs text-text-tertiary mt-1">{recentAppointment.email}</p>
                   </div>
-                  <div className="rounded-3xl bg-blush/70 p-4">
-                    <p className="font-semibold text-charcoal">Appointment</p>
-                    <p>{recentAppointment.date} at {recentAppointment.time}</p>
-                    <p className="mt-2 text-sm text-gray-600">Code: {recentAppointment.confirmationCode}</p>
+                  <div className="rounded-xl bg-gradient-warm p-4">
+                    <p className="font-semibold text-charcoal text-sm">Date & Time</p>
+                    <p className="mt-1 text-charcoal font-medium">{recentAppointment.date}</p>
+                    <p className="text-xs text-text-tertiary mt-1">{recentAppointment.time}</p>
+                  </div>
+                  <div className="rounded-xl bg-gradient-warm p-4">
+                    <p className="font-semibold text-charcoal text-sm">Services</p>
+                    <p className="mt-1 text-charcoal font-medium text-sm">{recentAppointment.services.length} selected</p>
+                    <p className="text-xs text-text-tertiary mt-1">Total: ${recentAppointment.services.reduce((sum, s) => sum + Number(s.price.replace('$', '')), 0)}</p>
+                  </div>
+                  <div className="rounded-xl bg-gradient-warm p-4">
+                    <p className="font-semibold text-charcoal text-sm">Confirmation</p>
+                    <p className="mt-1 text-charcoal font-mono text-xs font-semibold">{recentAppointment.confirmationCode}</p>
                   </div>
                 </div>
               </div>
